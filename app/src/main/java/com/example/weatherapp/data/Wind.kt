@@ -10,10 +10,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 
-data class Weather (
+data class Wind (
 
-	val id : Int,
-	val main : String,
-	val description : String,
-	val icon : String
+	val speed : Double,
+	val deg : Int,
+	val gust : Double
 )

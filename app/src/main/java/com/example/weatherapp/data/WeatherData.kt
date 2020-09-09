@@ -10,10 +10,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 
-data class Weather (
-
+data class WeatherData (
+	val coord : Coord,
+	val weather : List<Weather>,
+	val base : String,
+	val main : Main,
+	val visibility : Int,
+	val wind : Wind,
+	val clouds : Clouds,
+	val dt : Int,
+	val sys : Sys,
+	val timezone : Int,
 	val id : Int,
-	val main : String,
-	val description : String,
-	val icon : String
+	val name : String,
+	val cod : Int
 )

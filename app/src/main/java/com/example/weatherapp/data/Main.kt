@@ -10,10 +10,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 
-data class Weather (
-
-	val id : Int,
-	val main : String,
-	val description : String,
-	val icon : String
+data class Main (
+	val temp : Double,
+	val feels_like : Double,
+	val temp_min : Double,
+	val temp_max : Double,
+	val pressure : Int,
+	val humidity : Int
 )
