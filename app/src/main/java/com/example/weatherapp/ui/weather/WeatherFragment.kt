@@ -1,15 +1,15 @@
 package com.example.weatherapp.ui.weather
 
-import WeatherData
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.weatherapp.R
+import com.example.weatherapp.data.WeatherModel
 import kotlinx.android.synthetic.main.weather_fragment.*
 
 class WeatherFragment : Fragment() {
@@ -18,13 +18,17 @@ class WeatherFragment : Fragment() {
         fun newInstance() = WeatherFragment()
     }
 
-    private val viewModel: WeatherViewModel by viewModels()
+    private lateinit var appContext: Context
+
+    private lateinit var viewModel: WeatherViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        appContext = requireActivity().applicationContext
+        viewModel = WeatherViewModel(appContext)
         return inflater.inflate(R.layout.weather_fragment, container, false)
     }
 
@@ -33,16 +37,16 @@ class WeatherFragment : Fragment() {
         view.findViewById<Button>(R.id.refresh).setOnClickListener {
             viewModel.update()
         }
-        viewModel.weatherData.observe(viewLifecycleOwner, Observer { setWeather(it) })
+        viewModel.weatherModel.observe(viewLifecycleOwner, Observer { setWeather(it) })
     }
 
 
-    private fun setWeather(weatherData: WeatherData?) {
-        if (weatherData == null) {
-            weatherIcon.setImageDrawable(null)
-            weatherTemp.text = null
+    private fun setWeather(weatherModel: WeatherModel?) {
+        if (weatherModel == null) {
+            weatherIcon.setImageResource(R.drawable.nowifi)
+            weatherTemp.text = "Pas d'internet"
         } else {
-            when (weatherData.weather[0].id) {
+            when (weatherModel.weather) {
                 in 200..232 -> weatherIcon.setImageResource(R.drawable.thunder)
                 in 300..321 -> weatherIcon.setImageResource(R.drawable.rainy)
                 in 500..504 -> weatherIcon.setImageResource(R.drawable.rainy)
@@ -53,7 +57,7 @@ class WeatherFragment : Fragment() {
                 801 -> weatherIcon.setImageResource(R.drawable.sunny)
                 in 802..804 -> weatherIcon.setImageResource(R.drawable.cloudy)
             }
-            weatherTemp.text = "${weatherData?.main.temp.toString()} °C"
+            weatherTemp.text = "${weatherModel?.temp.toString()} °C"
         }
     }
 }

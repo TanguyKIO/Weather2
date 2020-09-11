@@ -1,36 +1,40 @@
 package com.example.weatherapp.ui.weather
 
-import WeatherData
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.weatherapp.data.WeatherRepository
-import com.example.weatherapp.data.WeatherResponse
-import javax.inject.Inject
+
+import android.content.Context
+import androidx.lifecycle.*
+import androidx.room.Room
+import com.example.weatherapp.data.*
 
 private const val TAG = "WeatherViewModel"
 
-class WeatherViewModel() : ViewModel() {
+class WeatherViewModel(private val context: Context) : ViewModel() {
 
-    private val weatherRepository = WeatherRepository()
+    private val weatherRepository: WeatherRepository
 
-    private val _weatherData = MediatorLiveData<WeatherData>()
-    val weatherData: LiveData<WeatherData> = _weatherData
+    private val _weatherModel = MediatorLiveData<WeatherModel>()
+    val weatherModel: LiveData<WeatherModel> = _weatherModel
 
-    private var currentSource: LiveData<WeatherResponse>? = null
+
+    private var currentSource: LiveData<WeatherModel>? = null
 
     init {
+        val wdb = Room.databaseBuilder(
+            context,
+            WeatherDatabase::class.java, "weather_database"
+        ).build()
+        val weatherDao = wdb.weatherDao()
+        weatherRepository = WeatherRepository(weatherDao)
         update()
     }
 
     fun update() {
         if (currentSource != null) {
-            _weatherData.removeSource(weatherData)
+            _weatherModel.removeSource(weatherModel)
         }
         val newSource = weatherRepository.getWeather()
-        _weatherData.addSource(newSource) {
-            _weatherData.postValue(it.weatherData)
+        _weatherModel.addSource(newSource) {
+            _weatherModel.postValue(it)
         }
         currentSource = newSource
     }
