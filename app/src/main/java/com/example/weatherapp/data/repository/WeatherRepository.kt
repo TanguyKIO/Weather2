@@ -11,6 +11,7 @@ import com.example.weatherapp.domain.entities.WeatherResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors.newCachedThreadPool
 import javax.inject.Inject
@@ -19,7 +20,8 @@ import javax.inject.Singleton
 @Singleton
 class WeatherRepository @Inject constructor(
     private val weatherService: WeatherService,
-    private val weatherDao: WeatherDao
+    private val weatherDao: WeatherDao,
+    private val retrofit: Retrofit
 ): RemoteRepository {
 
     override fun getWeather(): WeatherResponse? {
