@@ -1,4 +1,4 @@
-package com.example.weatherapp.entities
+package com.example.weatherapp.domain.entities
 
 class WeatherResponse (
     var isSuccess: Boolean,

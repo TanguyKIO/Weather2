@@ -1,4 +1,4 @@
-package com.example.weatherapp.entities
+package com.example.weatherapp.domain.entities
 
 data class Main (
 	val temp : Double,

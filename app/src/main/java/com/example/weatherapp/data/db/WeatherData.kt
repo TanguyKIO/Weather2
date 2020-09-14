@@ -1,4 +1,8 @@
-package com.example.weatherapp.entities
+package com.example.weatherapp.data.db
+
+import com.example.weatherapp.domain.entities.Coord
+import com.example.weatherapp.domain.entities.Main
+import com.example.weatherapp.domain.entities.Weather
 
 data class WeatherData(
     val coord: Coord,

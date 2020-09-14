@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.weatherapp.R
-import com.example.weatherapp.entities.WeatherResponse
+import com.example.weatherapp.domain.entities.WeatherResponse
 import kotlinx.android.synthetic.main.weather_fragment.*
 
 class WeatherFragment : Fragment() {

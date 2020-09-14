@@ -1,42 +1,43 @@
-package com.example.weatherapp.entities
+package com.example.weatherapp.data.repository
 
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.example.weatherapp.data.db.WeatherDao
+import com.example.weatherapp.data.db.WeatherData
+import com.example.weatherapp.data.web.WeatherService
+import com.example.weatherapp.domain.RemoteRepository
+import com.example.weatherapp.domain.entities.WeatherModel
+import com.example.weatherapp.domain.entities.WeatherResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors.newCachedThreadPool
+import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
+class WeatherRepository @Inject constructor(
+    private val weatherService: WeatherService,
+    private val weatherDao: WeatherDao
+): RemoteRepository {
 
-class WeatherRepository(private val weatherDao: WeatherDao) {
-
-    fun getWeather(): LiveData<WeatherResponse> {
-
+    override fun getWeather(): WeatherResponse? {
         val executor: Executor = newCachedThreadPool()
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/")
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
 
-        val data = MutableLiveData<WeatherResponse>()
-        val weatherService = retrofit.create(WeatherService::class.java)
+        var data: WeatherResponse? = null
+
         weatherService.getWeather("Lyon", "metric", "31821c1f9bc48389f4dac02cf1829e32")
             .enqueue(object : Callback<WeatherData> {
                 override fun onResponse(call: Call<WeatherData>, response: Response<WeatherData>) {
                     executor.execute {
                         val remote = response.body()
                         val weatherModel = remote?.let { remoteToModel(it) }
-                        val result =
+                        data =
                             WeatherResponse(
                                 true,
                                 weatherModel
                             )
-                        data.postValue(result)
                         if (weatherModel != null) {
                             weatherDao.save(weatherModel)
                         }
@@ -47,12 +48,11 @@ class WeatherRepository(private val weatherDao: WeatherDao) {
                     executor.execute {
                         Log.e("WeatherRepository", "Problème API call")
                         val weatherModel = weatherDao.getLast()
-                        val result =
+                        data =
                             WeatherResponse(
                                 false,
                                 weatherModel
                             )
-                        data.postValue(result)
                     }
                 }
             })

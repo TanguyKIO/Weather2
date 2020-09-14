@@ -1,5 +1,5 @@
 
-package com.example.weatherapp.entities
+package com.example.weatherapp.domain.entities
 data class Coord (
 
 	val lon : Double,

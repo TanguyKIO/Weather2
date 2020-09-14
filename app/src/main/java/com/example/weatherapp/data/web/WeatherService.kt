@@ -1,6 +1,7 @@
-package com.example.weatherapp.entities
+package com.example.weatherapp.data.web
 
 
+import com.example.weatherapp.data.db.WeatherData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

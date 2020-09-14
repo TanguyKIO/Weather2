@@ -1,18 +1,15 @@
 package com.example.weatherapp.ui.presentation
 
 
-import android.content.Context
 import androidx.lifecycle.*
-import androidx.room.Room
-import com.example.weatherapp.entities.WeatherDatabase
-import com.example.weatherapp.entities.WeatherRepository
-import com.example.weatherapp.entities.*
+import com.example.weatherapp.domain.entities.*
+import com.example.weatherapp.domain.useCases.GetWeatherUseCase
 
 private const val TAG = "WeatherViewModel"
 
-class WeatherViewModel(private val context: Context) : ViewModel() {
+class WeatherViewModel(private val getWeatherUseCase: GetWeatherUseCase) : ViewModel() {
 
-    private val weatherRepository: WeatherRepository
+
 
     private val _weatherModel = MediatorLiveData<WeatherResponse>()
     val weatherModel: LiveData<WeatherResponse> = _weatherModel
@@ -20,14 +17,7 @@ class WeatherViewModel(private val context: Context) : ViewModel() {
 
     private var currentSource: LiveData<WeatherResponse>? = null
 
-    init {
-        val wdb = Room.databaseBuilder(
-            context,
-            WeatherDatabase::class.java, "weather_database"
-        ).build()
-        val weatherDao = wdb.weatherDao()
-        weatherRepository =
-            WeatherRepository(weatherDao)
+    init{
         update()
     }
 
@@ -35,7 +25,8 @@ class WeatherViewModel(private val context: Context) : ViewModel() {
         if (currentSource != null) {
             _weatherModel.removeSource(weatherModel)
         }
-        val newSource = weatherRepository.getWeather()
+        var newSource = MutableLiveData<WeatherResponse>()
+        newSource.value = getWeatherUseCase.getWeather()
         _weatherModel.addSource(newSource) {
             _weatherModel.postValue(it)
         }
