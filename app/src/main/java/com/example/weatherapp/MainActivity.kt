@@ -2,7 +2,7 @@ package com.example.weatherapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.weatherapp.ui.weather.WeatherFragment
+import com.example.weatherapp.ui.presentation.WeatherFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +11,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, WeatherFragment.newInstance())
+                .replace(R.id.container,
+                    WeatherFragment.newInstance()
+                )
                 .commitNow()
         }
     }

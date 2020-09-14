@@ -1,9 +1,8 @@
-package com.example.weatherapp.data
+package com.example.weatherapp.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.ColumnInfo
-import java.util.*
 
 
 @Entity(tableName = "weather")
@@ -12,10 +11,8 @@ class WeatherModel(
     val temp: Double,
     @ColumnInfo(name = "weatherId")
     val weather: Int,
-    @ColumnInfo(name = "time" +
-            "")
-    val time: Long,
-    var isSuccess: Int
+    @ColumnInfo(name = "time")
+    val time: Long
 ){
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
