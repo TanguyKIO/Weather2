@@ -1,6 +1,5 @@
 package com.example.weatherapp.ui.presentation
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.weatherapp.R
 import com.example.weatherapp.domain.entities.WeatherResponse
@@ -19,17 +19,13 @@ class WeatherFragment : Fragment() {
         fun newInstance() = WeatherFragment()
     }
 
-    private lateinit var appContext: Context
-
-    private lateinit var viewModel: WeatherViewModel
+    private val viewModel: WeatherViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        appContext = requireActivity().applicationContext
-        viewModel = WeatherViewModel(appContext)
         return inflater.inflate(R.layout.weather_fragment, container, false)
     }
 
@@ -44,7 +40,7 @@ class WeatherFragment : Fragment() {
 
     private fun setWeather(weatherResponse: WeatherResponse) {
         if (!weatherResponse.isSuccess) {
-            Toast.makeText(appContext, "Pas connecté à Internet", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity?.applicationContext, "Pas connecté à Internet", Toast.LENGTH_SHORT).show()
         }
         when (weatherResponse.weatherData?.weather) {
             in 200..232 -> weatherIcon.setImageResource(R.drawable.thunder)
@@ -59,7 +55,7 @@ class WeatherFragment : Fragment() {
             else -> weatherIcon.setImageResource(R.drawable.nowifi)
         }
         if (weatherResponse.weatherData != null) {
-            weatherTemp.text = "${weatherResponse?.weatherData?.temp.toString()} °C"
+            weatherTemp.text = "${weatherResponse?.weatherData?.temp} °C"
         } else {
             weatherTemp.text = null
         }

@@ -4,7 +4,8 @@ import com.example.weatherapp.domain.entities.Coord
 import com.example.weatherapp.domain.entities.Main
 import com.example.weatherapp.domain.entities.Weather
 
-data class WeatherData(
+// TODO 2 => this should be the room entity
+data class WeatherEntity(
     val coord: Coord,
     val weather: List<Weather>,
     val base: String,

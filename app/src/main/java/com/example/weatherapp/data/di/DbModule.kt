@@ -1,19 +1,20 @@
 package com.example.weatherapp.data.di
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.weatherapp.data.db.WeatherDao
 import com.example.weatherapp.data.db.WeatherDatabase
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 
 @Module
+@InstallIn(ApplicationComponent::class)
 class DbModule {
 
-    //Comprendre comment add le context et comment provide l'api
     @Provides
     @Singleton
     fun provideDb(app: Application): RoomDatabase {

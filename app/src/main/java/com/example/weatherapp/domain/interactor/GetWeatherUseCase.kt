@@ -1,7 +1,7 @@
-package com.example.weatherapp.domain
+package com.example.weatherapp.domain.interactor
 
 import com.example.weatherapp.domain.entities.WeatherResponse
 
-interface RemoteRepository {
+interface GetWeatherUseCase {
     fun getWeather(): WeatherResponse?
 }

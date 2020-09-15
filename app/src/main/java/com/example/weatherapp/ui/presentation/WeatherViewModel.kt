@@ -3,21 +3,17 @@ package com.example.weatherapp.ui.presentation
 
 import androidx.lifecycle.*
 import com.example.weatherapp.domain.entities.*
-import com.example.weatherapp.domain.useCases.GetWeatherUseCase
+import com.example.weatherapp.domain.interactor.GetWeatherUseCase
+import javax.inject.Inject
 
-private const val TAG = "WeatherViewModel"
-
-class WeatherViewModel(private val getWeatherUseCase: GetWeatherUseCase) : ViewModel() {
-
-
+class WeatherViewModel @Inject constructor(private val getWeatherUseCase: GetWeatherUseCase) : ViewModel() {
 
     private val _weatherModel = MediatorLiveData<WeatherResponse>()
     val weatherModel: LiveData<WeatherResponse> = _weatherModel
 
-
     private var currentSource: LiveData<WeatherResponse>? = null
 
-    init{
+    init {
         update()
     }
 

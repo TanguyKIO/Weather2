@@ -6,9 +6,11 @@ import androidx.room.Query
 import com.example.weatherapp.domain.entities.WeatherModel
 
 
+// TODO 3.
+// use the newly created entity for the database
 @Dao
 interface WeatherDao {
-    @Query("SELECT * FROM weather WHERE time=(SELECT MAX(time) FROM weather)")
+    @Query("SELECT * FROM weather ORDER BY time DESC LIMIT 1")
     fun getLast(): WeatherModel
 
     @Insert
