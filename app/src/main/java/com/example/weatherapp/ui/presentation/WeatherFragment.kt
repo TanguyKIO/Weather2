@@ -11,15 +11,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.weatherapp.R
 import com.example.weatherapp.domain.entities.WeatherResponse
+import com.example.weatherapp.domain.entities.WeatherType
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.weather_fragment.*
 
+@AndroidEntryPoint
 class WeatherFragment : Fragment() {
+
+    private val viewModel: WeatherViewModel by viewModels()
 
     companion object {
         fun newInstance() = WeatherFragment()
     }
 
-    private val viewModel: WeatherViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,23 +44,25 @@ class WeatherFragment : Fragment() {
 
     private fun setWeather(weatherResponse: WeatherResponse) {
         if (!weatherResponse.isSuccess) {
-            Toast.makeText(activity?.applicationContext, "Pas connecté à Internet", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                activity?.applicationContext,
+                "Pas connecté à Internet",
+                Toast.LENGTH_SHORT
+            ).show()
         }
-        when (weatherResponse.weatherData?.weather) {
-            in 200..232 -> weatherIcon.setImageResource(R.drawable.thunder)
-            in 300..321 -> weatherIcon.setImageResource(R.drawable.rainy)
-            in 500..504 -> weatherIcon.setImageResource(R.drawable.rainy)
-            in 511..531 -> weatherIcon.setImageResource(R.drawable.rainy)
-            in 600..622 -> weatherIcon.setImageResource(R.drawable.snowy)
-            in 701..781 -> weatherIcon.setImageResource(R.drawable.fog)
-            800 -> weatherIcon.setImageResource(R.drawable.clear)
-            801 -> weatherIcon.setImageResource(R.drawable.sunny)
-            in 802..804 -> weatherIcon.setImageResource(R.drawable.cloudy)
+        when (weatherResponse.weatherModel?.weather) {
+            WeatherType.THUNDERSTORM -> weatherIcon.setImageResource(R.drawable.thunder)
+            WeatherType.DRIZZLE -> weatherIcon.setImageResource(R.drawable.rainy)
+            WeatherType.RAIN -> weatherIcon.setImageResource(R.drawable.rainy)
+            WeatherType.SNOW -> weatherIcon.setImageResource(R.drawable.snowy)
+            WeatherType.FOG -> weatherIcon.setImageResource(R.drawable.fog)
+            WeatherType.CLEAR -> weatherIcon.setImageResource(R.drawable.clear)
+            WeatherType.CLOUDS -> weatherIcon.setImageResource(R.drawable.cloudy)
             else -> weatherIcon.setImageResource(R.drawable.nowifi)
         }
-        if (weatherResponse.weatherData != null) {
-            weatherTemp.text = "${weatherResponse?.weatherData?.temp} °C"
-        } else {
+        if (weatherResponse.weatherModel?.weather != WeatherType.UNKNOWN) {
+            weatherTemp.text = "${weatherResponse.weatherModel?.temp} °C"
+        }else {
             weatherTemp.text = null
         }
     }

@@ -15,8 +15,8 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 class NetworkModule {
 
-    @Provides
     @Singleton
+    @Provides
     fun provideRetrofit(): WeatherService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)

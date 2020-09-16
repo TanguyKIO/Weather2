@@ -1,19 +1,22 @@
 package com.example.weatherapp.data.db
 
-import com.example.weatherapp.domain.entities.Coord
-import com.example.weatherapp.domain.entities.Main
-import com.example.weatherapp.domain.entities.Weather
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-// TODO 2 => this should be the room entity
+@Entity(tableName = "weather")
 data class WeatherEntity(
-    val coord: Coord,
-    val weather: List<Weather>,
-    val base: String,
-    val main: Main,
-    val visibility: Int,
-    val dt: Int,
-    val timezone: Int,
-    val id: Int,
-    val name: String,
-    val cod: Int
+    @PrimaryKey
+    @ColumnInfo(name = "time")
+    val time: Int,
+    @ColumnInfo(name = "temp")
+    val temp: Double,
+    @ColumnInfo(name = "weatherId")
+    val weather: Int,
+    @ColumnInfo(name = "wind-speed")
+    val windSpeed: Double,
+    @ColumnInfo(name = "feels-like")
+    val feelsLikeTemp: Double,
+    @ColumnInfo(name = "humidity")
+    val humidity: Int
 )

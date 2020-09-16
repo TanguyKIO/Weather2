@@ -1,6 +1,6 @@
 package com.example.weatherapp.domain.entities
 
-class WeatherResponse (
+class WeatherResponse(
     var isSuccess: Boolean,
-    val weatherData: WeatherModel?
+    val weatherModel: WeatherModel?
 )
