@@ -1,6 +1,5 @@
 package com.example.weatherapp.domain.interactor
 
-import androidx.lifecycle.LiveData
 import com.example.weatherapp.domain.entities.WeatherResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -8,7 +7,7 @@ import javax.inject.Inject
 class GetWeatherUseCaseImpl @Inject constructor(private val weatherRepository: WeatherRepository) :
     GetWeatherUseCase {
 
-    override fun getWeather(): LiveData<WeatherResponse> {
+    override fun getWeather(): Flow<WeatherResponse> {
         return weatherRepository.getWeather(LYON, METRIC)
     }
 

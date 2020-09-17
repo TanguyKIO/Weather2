@@ -22,7 +22,7 @@ class WeatherViewModel @ViewModelInject constructor(private val getWeatherUseCas
         if (currentSource != null) {
             _weatherModel.removeSource(weatherModel)
         }
-        val newSource = getWeatherUseCase.getWeather()
+        val newSource = getWeatherUseCase.getWeather().asLiveData()
         _weatherModel.addSource(newSource) {
             _weatherModel.postValue(it)
         }

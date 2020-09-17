@@ -9,11 +9,11 @@ import retrofit2.http.Query
 
 interface WeatherService {
     @GET(WEATHER_PATH)
-    fun getWeather(
+    suspend fun getWeather(
         @Query("q") cityName: String,
         @Query("units") units: String,
         @Query("appid") key: String
-    ): Call<WeatherData>
+    ): WeatherData
 }
 
 data class WeatherData(
