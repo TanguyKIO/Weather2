@@ -4,28 +4,32 @@ package com.example.weatherapp.ui.presentation
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.weatherapp.domain.entities.*
-import com.example.weatherapp.domain.interactor.GetWeatherUseCase
+import com.example.weatherapp.domain.interactor.GetCurrentWeather
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class WeatherViewModel @ViewModelInject constructor(private val getWeatherUseCase: GetWeatherUseCase) :
+class WeatherViewModel @ViewModelInject constructor(private val getWeatherUseCase: GetCurrentWeather) :
     ViewModel() {
 
-    private val _weatherModel = MediatorLiveData<WeatherResponse>()
-    val weatherModel: LiveData<WeatherResponse> = _weatherModel
+    private val _weatherModel = MutableLiveData<WeatherModel?>()
+    val weatherModel: LiveData<WeatherModel?> = _weatherModel
+    private val _state = MutableLiveData<State>()
+    val state: LiveData<State> = _state
 
-    private var currentSource: LiveData<WeatherResponse>? = null
+    private var updateJob: Job? = null
 
     init {
         update()
     }
 
     fun update() {
-        if (currentSource != null) {
-            _weatherModel.removeSource(weatherModel)
+        updateJob?.cancel()
+        updateJob = viewModelScope.launch {
+            getWeatherUseCase().collect {
+                _weatherModel.postValue(it.weatherModel)
+                _state.postValue(it.state)
+            }
         }
-        val newSource = getWeatherUseCase.getWeather().asLiveData()
-        _weatherModel.addSource(newSource) {
-            _weatherModel.postValue(it)
-        }
-        currentSource = newSource
     }
 }

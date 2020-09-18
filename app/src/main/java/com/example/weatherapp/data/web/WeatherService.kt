@@ -1,20 +1,21 @@
 package com.example.weatherapp.data.web
 
 
-import com.example.weatherapp.data.WEATHER_PATH
-import com.example.weatherapp.data.db.WeatherEntity
-import retrofit2.Call
+import com.example.weatherapp.data.CURRENT_WEATHER_PATH
+import com.example.weatherapp.data.FORECAST_WEATHER_PATH
+
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface WeatherService {
-    @GET(WEATHER_PATH)
+    @GET(CURRENT_WEATHER_PATH)
     suspend fun getWeather(
         @Query("q") cityName: String,
         @Query("units") units: String,
         @Query("appid") key: String
     ): WeatherData
 }
+
 
 data class WeatherData(
     val coord: Coord,

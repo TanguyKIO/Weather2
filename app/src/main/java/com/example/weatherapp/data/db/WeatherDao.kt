@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface WeatherDao {
     @Query("SELECT * FROM weather ORDER BY time DESC LIMIT 1")
-    fun getLast(): WeatherEntity
+    fun getLast(): WeatherEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun save(weatherEntity: WeatherEntity)
