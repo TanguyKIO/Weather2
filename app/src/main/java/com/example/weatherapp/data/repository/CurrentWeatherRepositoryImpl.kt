@@ -1,16 +1,12 @@
 package com.example.weatherapp.data.repository
 
 
-import android.util.Log
 import com.example.weatherapp.data.API_KEY
 import com.example.weatherapp.data.db.WeatherDao
-import com.example.weatherapp.data.db.WeatherEntity
-import com.example.weatherapp.data.web.WeatherData
+import com.example.weatherapp.data.db.CurrentWeatherEntity
+import com.example.weatherapp.data.web.CurrentWeatherData
 import com.example.weatherapp.data.web.WeatherService
-import com.example.weatherapp.domain.entities.State
-import com.example.weatherapp.domain.entities.WeatherModel
-import com.example.weatherapp.domain.entities.WeatherResponse
-import com.example.weatherapp.domain.entities.WeatherType
+import com.example.weatherapp.domain.entities.*
 import com.example.weatherapp.domain.interactor.CurrentWeatherRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -19,26 +15,27 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
+import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class WeatherRepositoryImpl @Inject constructor(
+class CurrentWeatherRepositoryImpl @Inject constructor(
     private val weatherService: WeatherService,
     private val weatherDao: WeatherDao
 ) : CurrentWeatherRepository {
 
-    override fun getCurrentWeather(city: String, units: String): Flow<WeatherResponse> {
+    override fun getCurrentWeather(city: String, units: String): Flow<CurrentWeatherResponse> {
         return flow {
-            val cached = weatherDao.getLast()
+            val cached = weatherDao.getLastCurrent()
             emit(entityToModel(cached, State.LOADING))
             delay(3_000)
-            val weatherEntity = remoteToEntity(weatherService.getWeather(city, units, API_KEY))
-            weatherDao.save(weatherEntity)
+            val weatherEntity = remoteToEntity(weatherService.getCurrentWeather(city, units, API_KEY))
+            weatherDao.saveCurrent(weatherEntity)
             emit(entityToModel(weatherEntity, State.SUCCESS))
         }.catch {
-            val cached = weatherDao.getLast()
+            val cached = weatherDao.getLastCurrent()
             if (cached == null) {
                 emit(entityToModel(cached, State.NO_DATA))
             } else {
@@ -47,8 +44,8 @@ class WeatherRepositoryImpl @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    private fun remoteToEntity(weatherData: WeatherData): WeatherEntity {
-        return WeatherEntity(
+    private fun remoteToEntity(weatherData: CurrentWeatherData): CurrentWeatherEntity {
+        return CurrentWeatherEntity(
             weatherData.dt,
             weatherData.main.temp,
             weatherData.weather[0].id,
@@ -58,9 +55,9 @@ class WeatherRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun entityToModel(weatherEntity: WeatherEntity?, state: State): WeatherResponse {
+    private fun entityToModel(weatherEntity: CurrentWeatherEntity?, state: State): CurrentWeatherResponse {
         if (weatherEntity == null) {
-            return WeatherResponse(null, state)
+            return CurrentWeatherResponse(null, state)
         } else {
             val weatherType: WeatherType = when (weatherEntity?.weather) {
                 in 200..232 -> WeatherType.THUNDERSTORM
@@ -73,13 +70,11 @@ class WeatherRepositoryImpl @Inject constructor(
                 else -> WeatherType.UNKNOWN
             }
 
-
             val millis: Long = weatherEntity.time.toLong() * 1000
             val date = Date(millis)
             val sdf = SimpleDateFormat("dd/MM/yy HH:mm", Locale.FRANCE)
             val formattedDate = sdf.format(date)
-            Log.e("WeatherRepositoryImpl","${millis}, ${weatherEntity.time}" + formattedDate)
-            return WeatherResponse(
+            return CurrentWeatherResponse(
                 WeatherModel(
                     formattedDate,
                     weatherEntity.temp,
@@ -91,4 +86,6 @@ class WeatherRepositoryImpl @Inject constructor(
             )
         }
     }
+
+
 }

@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.weatherapp.domain.entities.WeatherModel
 
-@Database(entities = [WeatherEntity::class], version = 1)
+@Database(entities = [CurrentWeatherEntity::class, ForecastWeatherEntity::class], version = 1)
 abstract class WeatherDatabase : RoomDatabase() {
     abstract fun weatherDao(): WeatherDao
 
@@ -22,7 +21,7 @@ abstract class WeatherDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         WeatherDatabase::class.java,
-                        "sleep_history_database"
+                        "weather_database"
                     )
                         .fallbackToDestructiveMigration()
                         .build()

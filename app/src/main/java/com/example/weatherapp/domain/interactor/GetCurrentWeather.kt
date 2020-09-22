@@ -1,8 +1,8 @@
 package com.example.weatherapp.domain.interactor
 
-import com.example.weatherapp.domain.entities.WeatherResponse
+import com.example.weatherapp.domain.entities.CurrentWeatherResponse
 import kotlinx.coroutines.flow.Flow
 
 interface GetCurrentWeather {
-    operator fun invoke(): Flow<WeatherResponse>
+    operator fun invoke(): Flow<CurrentWeatherResponse>
 }

@@ -1,6 +1,6 @@
 package com.example.weatherapp.domain.entities
 
-class WeatherResponse(
+class CurrentWeatherResponse(
     val weatherModel: WeatherModel?,
     val state: State
 )

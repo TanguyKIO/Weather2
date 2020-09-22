@@ -9,7 +9,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class WeatherViewModel @ViewModelInject constructor(private val getWeatherUseCase: GetCurrentWeather) :
+class CurrentWeatherViewModel @ViewModelInject constructor(private val getWeatherUseCase: GetCurrentWeather) :
     ViewModel() {
 
     private val _weatherModel = MutableLiveData<WeatherModel?>()

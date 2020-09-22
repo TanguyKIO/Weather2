@@ -1,7 +1,9 @@
 package com.example.weatherapp.data.di
 
-import com.example.weatherapp.data.repository.WeatherRepositoryImpl
+import com.example.weatherapp.data.repository.CurrentWeatherRepositoryImpl
+import com.example.weatherapp.data.repository.ForecastWeatherRepositoryImpl
 import com.example.weatherapp.domain.interactor.CurrentWeatherRepository
+import com.example.weatherapp.domain.interactor.ForecastWeatherRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,5 +13,8 @@ import dagger.hilt.android.components.ApplicationComponent
 @InstallIn(ApplicationComponent::class)
 abstract class RepositoryModule {
     @Binds
-    abstract fun provideRepo(weatherRepositoryImpl: WeatherRepositoryImpl): CurrentWeatherRepository
+    abstract fun provideCurrentRepo(weatherRepositoryImpl: CurrentWeatherRepositoryImpl): CurrentWeatherRepository
+
+    @Binds
+    abstract fun provideForecastRepo(weatherRepositoryImpl: ForecastWeatherRepositoryImpl): ForecastWeatherRepository
 }

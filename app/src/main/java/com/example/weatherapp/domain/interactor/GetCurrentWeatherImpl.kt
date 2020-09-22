@@ -1,15 +1,13 @@
 package com.example.weatherapp.domain.interactor
 
-import com.example.weatherapp.domain.entities.WeatherResponse
+import com.example.weatherapp.domain.entities.CurrentWeatherResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetCurrentWeatherImpl @Inject constructor(private val weatherRepository: CurrentWeatherRepository) :
     GetCurrentWeather {
 
-
-
-    override operator fun invoke(): Flow<WeatherResponse> {
+    override operator fun invoke(): Flow<CurrentWeatherResponse> {
         return weatherRepository.getCurrentWeather(LYON, METRIC)
     }
 
@@ -20,5 +18,5 @@ class GetCurrentWeatherImpl @Inject constructor(private val weatherRepository: C
 }
 
 interface CurrentWeatherRepository {
-    fun getCurrentWeather(city: String, units: String): Flow<WeatherResponse>
+    fun getCurrentWeather(city: String, units: String): Flow<CurrentWeatherResponse>
 }
