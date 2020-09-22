@@ -32,7 +32,8 @@ class ForecastWeatherRepositoryImpl @Inject constructor(
     override fun getForecastWeather(city: String, units: String): Flow<ForecastWeatherResponse> {
         return flow {
             val cached = weatherDao.getLastForecast()
-            emit(entityToModel(cached,State.LOADING))
+            val reversed = cached?.asReversed()
+            emit(entityToModel(reversed,State.LOADING))
             delay(3_000)
             val weatherEntities = remoteToEntity(weatherService.getForecastWeather("45.75","4.85", units, "current,minutely,hourly",API_KEY))
             for(weatherEntity in weatherEntities){
@@ -41,10 +42,11 @@ class ForecastWeatherRepositoryImpl @Inject constructor(
             emit(entityToModel(weatherEntities, State.SUCCESS))
         }.catch {
             val cached = weatherDao.getLastForecast()
+            val reversed = cached?.asReversed()
             if (cached == null) {
-                emit(entityToModel(cached, State.NO_DATA))
+                emit(entityToModel(reversed, State.NO_DATA))
             } else {
-                emit(entityToModel(cached, State.FAILURE))
+                emit(entityToModel(reversed, State.FAILURE))
             }
         }.flowOn(Dispatchers.IO)
     }

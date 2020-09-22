@@ -1,16 +1,15 @@
 package com.example.weatherapp.ui.presentation
 
 import android.os.Bundle
+import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
@@ -23,7 +22,7 @@ class WeatherFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private var progressBar: ProgressBar? = null
+
     private val currentViewModel: CurrentWeatherViewModel by viewModels()
     private val forecastViewModel: ForecastWeatherViewModel by viewModels()
 
@@ -45,41 +44,44 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerView)
-        viewManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.layoutManager = viewManager
-        recyclerView.adapter = weatherAdapter
-        view.findViewById<Button>(R.id.refresh).setOnClickListener {
+
+        val s = "<font color=#FF8C00>Weather</font><font color=#00000>App</font>"
+        weatherTitle.text = Html.fromHtml(s)
+        val divider = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+
+        refresh?.setOnRefreshListener {
             currentViewModel.update()
             forecastViewModel.update()
         }
-        progressBar = view.findViewById(R.id.loadingSpinner) as ProgressBar
-        currentViewModel.weatherModel.observe(
-            viewLifecycleOwner,
-            Observer { setCurrentWeather(it) })
+
+        viewManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = viewManager
+        recyclerView.addItemDecoration(divider)
+        recyclerView.adapter = weatherAdapter
+
+        currentViewModel.weatherModel.observe(viewLifecycleOwner, Observer { setCurrentWeather(it) })
         currentViewModel.state.observe(viewLifecycleOwner, Observer { showCurrentState(it) })
-        forecastViewModel.weatherModels.observe(
-            viewLifecycleOwner,
-            Observer { setForecastWeather(it) })
-        //forecastViewModel.state.observe(viewLifecycleOwner, Observer { showForecastState(it) })
+        forecastViewModel.weatherModels.observe(viewLifecycleOwner, Observer { setForecastWeather(it) })
+        forecastViewModel.state.observe(viewLifecycleOwner, Observer { showCurrentState(it) })
     }
 
     private fun showCurrentState(state: State) {
         when (state) {
             State.NO_DATA -> {
                 warning.text = "Aucune donnée en cache, connectez-vous à Internet"
-                progressBar?.visibility = GONE
+                refresh?.isRefreshing = false
             }
             State.FAILURE -> {
                 warning.text = "Connectez-vous à Internet"
-                progressBar?.visibility = GONE
+                refresh?.isRefreshing = false
             }
             State.LOADING -> {
                 warning.text = null
-                progressBar?.visibility = VISIBLE
+                refresh?.isRefreshing = true
             }
             State.SUCCESS -> {
                 warning.text = null
-                progressBar?.visibility = GONE
+                refresh?.isRefreshing = false
             }
         }
     }
@@ -103,7 +105,6 @@ class WeatherFragment : Fragment() {
         }
 
     }
-
 
 
     private fun setForecastWeather(weatherModels: List<WeatherModel>?) {
