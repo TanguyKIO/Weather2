@@ -31,9 +31,9 @@ data class ForecastWeatherEntity(
     @ColumnInfo(name = "weatherId")
     val weather: Int,
     @ColumnInfo(name = "wind-speed")
-    val windSpeed: Double?,
+    val windSpeed: Double,
     @ColumnInfo(name = "feels-like")
-    val feelsLikeTemp: Double?,
+    val feelsLikeTemp: Double,
     @ColumnInfo(name = "humidity")
     val humidity: Int
 )

@@ -1,9 +1,6 @@
 package com.example.weatherapp.domain.di
 
-import com.example.weatherapp.domain.interactor.GetCurrentWeather
-import com.example.weatherapp.domain.interactor.GetCurrentWeatherImpl
-import com.example.weatherapp.domain.interactor.GetForecastWeather
-import com.example.weatherapp.domain.interactor.GetForecastWeatherImpl
+import com.example.weatherapp.domain.interactor.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,4 +14,7 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun provideForecastWeather(getWeather: GetForecastWeatherImpl): GetForecastWeather
+
+    @Binds
+    abstract fun provideRecommendations(getWears: GetRecommendationsImpl): GetRecommendations
 }

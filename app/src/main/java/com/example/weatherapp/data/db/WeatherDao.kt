@@ -14,8 +14,8 @@ interface WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveCurrent(weatherEntity: CurrentWeatherEntity)
 
-    @Query("SELECT * FROM forecast_weather ORDER BY time DESC LIMIT 8")
-    fun getLastForecast(): List<ForecastWeatherEntity>?
+    @Query("SELECT * FROM forecast_weather ORDER BY time DESC LIMIT :limit")
+    fun getLastForecast(limit: Int): List<ForecastWeatherEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveForecast(weatherEntity: ForecastWeatherEntity)

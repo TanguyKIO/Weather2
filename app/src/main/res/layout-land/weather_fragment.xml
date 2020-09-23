@@ -56,13 +56,25 @@
                 tools:srcCompat="@drawable/nowifi" />
 
             <TextView
+                android:id="@+id/weatherCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lgc"
+                android:textSize="30dp"
+                app:layout_constraintDimensionRatio="2"
+                app:layout_constraintEnd_toStartOf="@id/weatherTemp"
+                app:layout_constraintStart_toStartOf="@id/weatherIcon"
+                app:layout_constraintTop_toBottomOf="@+id/weatherIcon"
+                tools:text="Lyon" />
+
+            <TextView
                 android:id="@+id/weatherTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="30dp"
                 app:layout_constraintEnd_toEndOf="@id/weatherIcon"
-                app:layout_constraintStart_toStartOf="@id/weatherIcon"
+                app:layout_constraintStart_toEndOf="@id/weatherCity"
                 app:layout_constraintTop_toBottomOf="@+id/weatherIcon"
                 tools:text="20" />
 

@@ -117,73 +117,73 @@ data class Wind(
 
 data class ForecastWeatherData(
     @SerializedName("lat")
-    val lat : Double,
+    val lat: Double,
     @SerializedName("lon")
-    val lon : Double,
+    val lon: Double,
     @SerializedName("timezone")
-    val timezone : String,
+    val timezone: String,
     @SerializedName("timezone_offset")
-    val timezone_offset : Int,
+    val timezone_offset: Int,
     @SerializedName("daily")
-    val daily : List<Daily>
+    val daily: List<Daily>
 )
 
-data class Daily (
+data class Daily(
     @SerializedName("dt")
-    val dt : Int,
+    val dt: Int,
     @SerializedName("sunrise")
-    val sunrise : Int,
+    val sunrise: Int,
     @SerializedName("sunset")
-    val sunset : Int,
+    val sunset: Int,
     @SerializedName("temp")
-    val temp : Temp,
+    val temp: Temp,
     @SerializedName("feels_like")
-    val feels_like : FeelsLike,
+    val feels_like: FeelsLike,
     @SerializedName("pressure")
-    val pressure : Int,
+    val pressure: Int,
     @SerializedName("humidity")
-    val humidity : Int,
+    val humidity: Int,
     @SerializedName("dew_point")
-    val dew_point : Double,
+    val dew_point: Double,
     @SerializedName("wind_speed")
-    val wind_speed : Double,
+    val wind_speed: Double,
     @SerializedName("wind_deg")
-    val wind_deg : Int,
+    val wind_deg: Int,
     @SerializedName("weather")
-    val weather : List<Weather>,
+    val weather: List<Weather>,
     @SerializedName("clouds")
-    val clouds : Int,
+    val clouds: Int,
     @SerializedName("pop")
-    val pop : Double,
+    val pop: Double,
     @SerializedName("rain")
-    val rain : Double,
+    val rain: Double,
     @SerializedName("uvi")
-    val uvi : Double
+    val uvi: Double
 )
 
-data class Temp (
+data class Temp(
     @SerializedName("day")
-    val day : Double,
+    val day: Double,
     @SerializedName("min")
-    val min : Double,
+    val min: Double,
     @SerializedName("max")
-    val max : Double,
+    val max: Double,
     @SerializedName("night")
-    val night : Double,
+    val night: Double,
     @SerializedName("eve")
-    val eve : Double,
+    val eve: Double,
     @SerializedName("morn")
-    val morn : Double
+    val morn: Double
 )
 
-data class FeelsLike (
+data class FeelsLike(
     @SerializedName("day")
-    val day : Double,
+    val day: Double,
     @SerializedName("night")
-    val night : Double,
+    val night: Double,
     @SerializedName("eve")
-    val eve : Double,
+    val eve: Double,
     @SerializedName("morn")
-    val morn : Double
+    val morn: Double
 )
 

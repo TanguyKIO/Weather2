@@ -1,8 +1,8 @@
 package com.example.weatherapp.ui.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,16 +59,35 @@ class WeatherFragment : Fragment() {
         recyclerView.addItemDecoration(divider)
         recyclerView.adapter = weatherAdapter
 
-        currentViewModel.weatherModel.observe(viewLifecycleOwner, Observer { setCurrentWeather(it) })
+        currentViewModel.weatherModel.observe(
+            viewLifecycleOwner,
+            Observer { setCurrentWeather(it) })
         currentViewModel.state.observe(viewLifecycleOwner, Observer { showCurrentState(it) })
-        forecastViewModel.weatherModels.observe(viewLifecycleOwner, Observer { setForecastWeather(it) })
+        
+        currentViewModel.wears.observe(viewLifecycleOwner,
+            Observer { setRecommendations(it) })
+        
+        forecastViewModel.weatherModels.observe(
+            viewLifecycleOwner,
+            Observer { setForecastWeather(it) })
         forecastViewModel.state.observe(viewLifecycleOwner, Observer { showCurrentState(it) })
+    }
+
+    private fun setRecommendations(recommendations: List<Wears>) {
+        for(wear in recommendations){
+            when(wear){
+                Wears.SUNGLASSES -> sunglasses.text = "Sunglasses"
+                Wears.WINDBREAKER -> wind_breaker.text = "Windbreaker"
+                Wears.SWEATER -> sweater.text = "Sweater"
+                Wears.WINTER_JACKET -> winter_jacket.text = "WinterJacket"
+            }
+        }
     }
 
     private fun showCurrentState(state: State) {
         when (state) {
             State.NO_DATA -> {
-                warning.text = "Aucune donnée en cache, connectez-vous à Internet"
+                warning.text = "Aucune donnée accessible"
                 refresh?.isRefreshing = false
             }
             State.FAILURE -> {
@@ -76,7 +95,6 @@ class WeatherFragment : Fragment() {
                 refresh?.isRefreshing = false
             }
             State.LOADING -> {
-                warning.text = null
                 refresh?.isRefreshing = true
             }
             State.SUCCESS -> {
@@ -90,6 +108,7 @@ class WeatherFragment : Fragment() {
         if (weatherModel != null) {
             weatherTemp.text = "${weatherModel.temp} °C"
             weatherDate.text = weatherModel.time
+            weatherCity.text= weatherModel.city
         } else {
             weatherTemp.text = null
         }
@@ -101,13 +120,14 @@ class WeatherFragment : Fragment() {
             WeatherType.FOG -> weatherIcon.setImageResource(R.drawable.fog)
             WeatherType.CLEAR -> weatherIcon.setImageResource(R.drawable.clear)
             WeatherType.CLOUDS -> weatherIcon.setImageResource(R.drawable.cloudy)
-            null -> weatherIcon.setImageResource(R.drawable.nowifi)
+            WeatherType.UNKNOWN -> weatherIcon.setImageResource(R.drawable.nodata)
+            null -> weatherIcon.setImageResource(R.drawable.nodata)
         }
 
     }
 
 
-    private fun setForecastWeather(weatherModels: List<WeatherModel>?) {
+    private fun setForecastWeather(weatherModels: List<WeatherModel>) {
         weatherAdapter.weathers = weatherModels
         weatherAdapter.notifyDataSetChanged()
     }

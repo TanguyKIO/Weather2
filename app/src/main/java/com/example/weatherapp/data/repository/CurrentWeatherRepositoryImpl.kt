@@ -29,19 +29,26 @@ class CurrentWeatherRepositoryImpl @Inject constructor(
     override fun getCurrentWeather(city: String, units: String): Flow<CurrentWeatherResponse> {
         return flow {
             val cached = weatherDao.getLastCurrent()
-            emit(entityToModel(cached, State.LOADING))
-            delay(3_000)
-            val weatherEntity = remoteToEntity(weatherService.getCurrentWeather(city, units, API_KEY))
+            emit(entityToModel(cached, State.LOADING, city))
+            delay(1000)
+            val weatherEntity =
+                remoteToEntity(weatherService.getCurrentWeather(city, units, API_KEY))
             weatherDao.saveCurrent(weatherEntity)
-            emit(entityToModel(weatherEntity, State.SUCCESS))
+            emit(entityToModel(weatherEntity, State.SUCCESS, city))
         }.catch {
             val cached = weatherDao.getLastCurrent()
             if (cached == null) {
-                emit(entityToModel(cached, State.NO_DATA))
+                emit(entityToModel(cached, State.NO_DATA, city))
             } else {
-                emit(entityToModel(cached, State.FAILURE))
+                emit(entityToModel(cached, State.FAILURE, city))
             }
         }.flowOn(Dispatchers.IO)
+    }
+
+    override fun getRecommendations(): List<Wears> {
+        val recommendation = mutableListOf<Wears>()
+
+        return recommendation
     }
 
     private fun remoteToEntity(weatherData: CurrentWeatherData): CurrentWeatherEntity {
@@ -55,11 +62,15 @@ class CurrentWeatherRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun entityToModel(weatherEntity: CurrentWeatherEntity?, state: State): CurrentWeatherResponse {
+    private fun entityToModel(
+        weatherEntity: CurrentWeatherEntity?,
+        state: State,
+        city: String
+    ): CurrentWeatherResponse {
         if (weatherEntity == null) {
             return CurrentWeatherResponse(null, state)
         } else {
-            val weatherType: WeatherType = when (weatherEntity?.weather) {
+            val weatherType: WeatherType = when (weatherEntity.weather) {
                 in 200..232 -> WeatherType.THUNDERSTORM
                 in 300..321 -> WeatherType.DRIZZLE
                 in 500..531 -> WeatherType.RAIN
@@ -77,6 +88,7 @@ class CurrentWeatherRepositoryImpl @Inject constructor(
             return CurrentWeatherResponse(
                 WeatherModel(
                     formattedDate,
+                    city,
                     weatherEntity.temp,
                     weatherType,
                     weatherEntity.windSpeed,

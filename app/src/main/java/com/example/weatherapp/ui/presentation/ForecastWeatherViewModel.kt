@@ -15,8 +15,8 @@ import kotlinx.coroutines.launch
 class ForecastWeatherViewModel @ViewModelInject constructor(private val getForecastWeather: GetForecastWeather) :
     ViewModel() {
 
-    private val _weatherModels = MutableLiveData<List<WeatherModel>?>()
-    val weatherModels: LiveData<List<WeatherModel>?> = _weatherModels
+    private val _weatherModels = MutableLiveData<List<WeatherModel>>()
+    val weatherModels: LiveData<List<WeatherModel>> = _weatherModels
     private val _state = MutableLiveData<State>()
     val state: LiveData<State> = _state
 
