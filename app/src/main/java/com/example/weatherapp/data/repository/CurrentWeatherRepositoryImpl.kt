@@ -45,12 +45,6 @@ class CurrentWeatherRepositoryImpl @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    override fun getRecommendations(): List<Wears> {
-        val recommendation = mutableListOf<Wears>()
-
-        return recommendation
-    }
-
     private fun remoteToEntity(weatherData: CurrentWeatherData): CurrentWeatherEntity {
         return CurrentWeatherEntity(
             weatherData.dt,

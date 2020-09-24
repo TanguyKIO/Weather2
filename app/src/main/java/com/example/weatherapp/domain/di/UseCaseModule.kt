@@ -10,11 +10,11 @@ import dagger.hilt.android.components.ApplicationComponent
 @InstallIn(ApplicationComponent::class)
 abstract class UseCaseModule {
     @Binds
-    abstract fun provideCurrentWeather(getWeather: GetCurrentWeatherImpl): GetCurrentWeather
+    abstract fun provideCurrentWeather(getWeather: GetCurrentWeatherAndRecommendationImpl): GetCurrentWeatherAndRecommendation
 
     @Binds
-    abstract fun provideForecastWeather(getWeather: GetForecastWeatherImpl): GetForecastWeather
+    abstract fun provideForecastWeather(getWeather: GetForecastWeatherAndRecommendationImpl): GetForecastWeatherAndRecommendation
 
     @Binds
-    abstract fun provideRecommendations(getWears: GetRecommendationsImpl): GetRecommendations
+    abstract fun provideRecommendations(getRecommendations: GetRecommendationsImpl): GetRecommendations
 }

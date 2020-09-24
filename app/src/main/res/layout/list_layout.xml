@@ -9,42 +9,87 @@
 
     <ImageView
         android:id="@+id/forecastIcon"
-        android:layout_width="50dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="200dp"
         android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="@+id/forecastDate"
-        app:layout_constraintDimensionRatio="8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/f_sunglasses"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toEndOf="@id/forecastTemp"
         app:layout_constraintTop_toTopOf="@+id/forecastDate" />
 
     <TextView
         android:id="@+id/forecastDate"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="200dp"
-        android:layout_weight="1"
         android:fontFamily="@font/lgc"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/forecastTemp"
+        app:layout_constraintHorizontal_weight="3"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Some date" />
 
     <TextView
         android:id="@+id/forecastTemp"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="20dp"
-        android:textColor="@color/white"
         android:fontFamily="@font/lgc"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/forecastDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/forecastIcon"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toEndOf="@id/forecastDate"
         app:layout_constraintTop_toTopOf="@+id/forecastDate"
         tools:text="aaaaaaa" />
+
+
+    <ImageView
+        android:id="@+id/f_sunglasses"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/f_winter_jacket"
+        app:layout_constraintEnd_toStartOf="@id/f_sweater"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/forecastIcon"
+        app:layout_constraintTop_toTopOf="@+id/forecastIcon"/>
+
+    <ImageView
+        android:id="@+id/f_sweater"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/f_windbreaker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/f_sunglasses"
+        app:layout_constraintTop_toTopOf="@+id/forecastIcon"/>
+
+    <ImageView
+        android:id="@+id/f_winter_jacket"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/forecastIcon"
+        app:layout_constraintEnd_toStartOf="@id/f_windbreaker"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/forecastIcon"
+        app:layout_constraintTop_toBottomOf="@+id/f_sunglasses"/>
+
+    <ImageView
+        android:id="@+id/f_windbreaker"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/forecastIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/f_winter_jacket"
+        app:layout_constraintTop_toBottomOf="@+id/f_sweater"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

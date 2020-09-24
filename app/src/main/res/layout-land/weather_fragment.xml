@@ -38,7 +38,8 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="30dp"
-                android:scrollbars="vertical"
+                android:overScrollMode="never"
+                android:scrollbars="none"
                 app:layout_constraintBottom_toTopOf="@id/warning"
                 app:layout_constraintStart_toEndOf="@id/weatherIcon"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -89,6 +90,45 @@
                 app:layout_constraintStart_toStartOf="@id/weatherIcon"
                 app:layout_constraintTop_toBottomOf="@id/weatherTemp"
                 tools:text="20" />
+            <ImageView
+                android:id="@+id/sunglasses"
+                android:visibility="invisible"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toStartOf="@id/weatherIcon"
+                app:layout_constraintTop_toBottomOf="@id/weatherTitle"
+                tools:text="20"/>
+
+            <ImageView
+                android:id="@+id/sweater"
+                android:visibility="invisible"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toStartOf="@id/weatherIcon"
+                app:layout_constraintTop_toBottomOf="@id/sunglasses"
+                tools:text="20"/>
+
+            <ImageView
+                android:id="@+id/winter_jacket"
+                android:visibility="invisible"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toStartOf="@id/weatherIcon"
+                app:layout_constraintTop_toBottomOf="@id/sweater"
+                tools:text="20"/>
+
+            <ImageView
+                android:id="@+id/wind_breaker"
+                android:visibility="invisible"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toStartOf="@id/weatherIcon"
+                app:layout_constraintTop_toBottomOf="@id/winter_jacket"
+                tools:text="20"/>
 
 
             <TextView

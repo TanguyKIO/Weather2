@@ -6,10 +6,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.domain.entities.WeatherModel
+import com.example.weatherapp.domain.entities.Wears
+import com.example.weatherapp.domain.entities.WeatherAndRecommendation
 import com.example.weatherapp.domain.entities.WeatherType
+import kotlinx.android.synthetic.main.weather_fragment.*
+import kotlin.math.roundToInt
 
-class WeatherAdapter(var weathers: List<WeatherModel> = emptyList()) :
+class WeatherAdapter(var weathers: List<WeatherAndRecommendation> = emptyList()) :
     RecyclerView.Adapter<WeatherAdapter.WeatherHolder>() {
 
     override fun onCreateViewHolder(
@@ -32,11 +35,24 @@ class WeatherAdapter(var weathers: List<WeatherModel> = emptyList()) :
         private var date: TextView = view.findViewById(R.id.forecastDate)
         private var temp: TextView = view.findViewById(R.id.forecastTemp)
         private var icon: ImageView = view.findViewById(R.id.forecastIcon)
+        private var sunglasses: ImageView = view.findViewById(R.id.f_sunglasses)
+        private var winterJacket: ImageView = view.findViewById(R.id.f_winter_jacket)
+        private var sweater: ImageView = view.findViewById(R.id.f_sweater)
+        private var windbreaker: ImageView = view.findViewById(R.id.f_windbreaker)
+
+        init{
+            sunglasses.setImageResource(R.drawable.sunglasses)
+            winterJacket.setImageResource(R.drawable.jacket)
+            windbreaker.setImageResource(R.drawable.windbreaker)
+            sweater.setImageResource(R.drawable.sweater)
+        }
+
+
 
         internal fun bind(position: Int) {
-            date.text = weathers[position].time
-            temp.text = "${weathers[position].temp} °C"
-            when (weathers[position].weather) {
+            date.text = weathers[position].weatherModel.time
+            temp.text = "${weathers[position].weatherModel.temp.roundToInt()} °C"
+            when (weathers[position].weatherModel.weather) {
                 WeatherType.THUNDERSTORM -> icon.setImageResource(R.drawable.thunder)
                 WeatherType.DRIZZLE -> icon.setImageResource(R.drawable.rainy)
                 WeatherType.RAIN -> icon.setImageResource(R.drawable.rainy)
@@ -45,11 +61,21 @@ class WeatherAdapter(var weathers: List<WeatherModel> = emptyList()) :
                 WeatherType.CLEAR -> icon.setImageResource(R.drawable.clear)
                 WeatherType.CLOUDS -> icon.setImageResource(R.drawable.cloudy)
                 WeatherType.UNKNOWN -> icon.visibility = View.GONE
-                null -> icon.visibility = View.GONE
             }
+
+            sunglasses.visibility = View.INVISIBLE
+            windbreaker.visibility = View.INVISIBLE
+            sweater.visibility = View.INVISIBLE
+            winterJacket.visibility = View.INVISIBLE
+
+            for (wear in weathers[position].wears)
+                when (wear) {
+                    Wears.SUNGLASSES -> sunglasses.visibility = View.VISIBLE
+                    Wears.WINDBREAKER -> windbreaker.visibility = View.VISIBLE
+                    Wears.SWEATER -> sweater.visibility = View.VISIBLE
+                    Wears.WINTER_JACKET -> winterJacket.visibility = View.VISIBLE
+                }
         }
-
     }
-
 }
 

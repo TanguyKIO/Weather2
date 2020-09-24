@@ -6,17 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.domain.entities.State
+import com.example.weatherapp.domain.entities.WeatherAndRecommendation
 import com.example.weatherapp.domain.entities.WeatherModel
-import com.example.weatherapp.domain.interactor.GetForecastWeather
+import com.example.weatherapp.domain.interactor.GetForecastWeatherAndRecommendation
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ForecastWeatherViewModel @ViewModelInject constructor(private val getForecastWeather: GetForecastWeather) :
+class ForecastWeatherViewModel @ViewModelInject constructor(private val getForecastWeather: GetForecastWeatherAndRecommendation) :
     ViewModel() {
 
-    private val _weatherModels = MutableLiveData<List<WeatherModel>>()
-    val weatherModels: LiveData<List<WeatherModel>> = _weatherModels
+    private val _weathersAndRecommendations = MutableLiveData<List<WeatherAndRecommendation>>()
+    val weathersAndRecommendations: LiveData<List<WeatherAndRecommendation>> = _weathersAndRecommendations
     private val _state = MutableLiveData<State>()
     val state: LiveData<State> = _state
 
@@ -30,7 +31,7 @@ class ForecastWeatherViewModel @ViewModelInject constructor(private val getForec
         updateJob?.cancel()
         updateJob = viewModelScope.launch {
             getForecastWeather().collect {
-                _weatherModels.postValue(it.weatherModels)
+                _weathersAndRecommendations.postValue(it.weatherAndRecommendations)
                 _state.postValue(it.state)
             }
         }

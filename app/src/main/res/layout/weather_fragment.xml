@@ -32,9 +32,10 @@
 
             <ImageView
                 android:id="@+id/weatherIcon"
-                android:layout_width="300dp"
+                android:layout_width="0dp"
                 android:layout_height="200dp"
-                app:layout_constraintDimensionRatio="2"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/weatherTitle"
@@ -77,38 +78,42 @@
                 app:layout_constraintTop_toBottomOf="@id/weatherTemp"
                 tools:text="20" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/sunglasses"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="70dp"
                 app:layout_constraintEnd_toStartOf="@id/weatherIcon"
                 app:layout_constraintTop_toBottomOf="@id/weatherTitle"
                 tools:text="20"/>
 
-            <TextView
+            <ImageView
                 android:id="@+id/sweater"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:visibility="invisible"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toStartOf="@id/weatherIcon"
                 app:layout_constraintTop_toBottomOf="@id/sunglasses"
                 tools:text="20"/>
 
-            <TextView
+            <ImageView
                 android:id="@+id/winter_jacket"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:visibility="invisible"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toStartOf="@id/weatherIcon"
                 app:layout_constraintTop_toBottomOf="@id/sweater"
                 tools:text="20"/>
 
-            <TextView
+            <ImageView
                 android:id="@+id/wind_breaker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:visibility="invisible"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toStartOf="@id/weatherIcon"
                 app:layout_constraintTop_toBottomOf="@id/winter_jacket"
                 tools:text="20"/>
@@ -135,7 +140,8 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="50dp"
-                android:scrollbars="vertical"
+                android:overScrollMode="never"
+                android:scrollbars="none"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

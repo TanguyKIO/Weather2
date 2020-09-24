@@ -1,6 +1,5 @@
 package com.example.weatherapp.ui.presentation
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -16,6 +15,7 @@ import com.example.weatherapp.R
 import com.example.weatherapp.domain.entities.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.weather_fragment.*
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class WeatherFragment : Fragment() {
@@ -54,6 +54,11 @@ class WeatherFragment : Fragment() {
             forecastViewModel.update()
         }
 
+        sunglasses.setImageResource(R.drawable.sunglasses)
+        winter_jacket.setImageResource(R.drawable.jacket)
+        wind_breaker.setImageResource(R.drawable.windbreaker)
+        sweater.setImageResource(R.drawable.sweater)
+
         viewManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = viewManager
         recyclerView.addItemDecoration(divider)
@@ -67,19 +72,25 @@ class WeatherFragment : Fragment() {
         currentViewModel.wears.observe(viewLifecycleOwner,
             Observer { setRecommendations(it) })
         
-        forecastViewModel.weatherModels.observe(
+        forecastViewModel.weathersAndRecommendations.observe(
             viewLifecycleOwner,
             Observer { setForecastWeather(it) })
         forecastViewModel.state.observe(viewLifecycleOwner, Observer { showCurrentState(it) })
     }
 
-    private fun setRecommendations(recommendations: List<Wears>) {
-        for(wear in recommendations){
-            when(wear){
-                Wears.SUNGLASSES -> sunglasses.text = "Sunglasses"
-                Wears.WINDBREAKER -> wind_breaker.text = "Windbreaker"
-                Wears.SWEATER -> sweater.text = "Sweater"
-                Wears.WINTER_JACKET -> winter_jacket.text = "WinterJacket"
+    private fun setRecommendations(recommendations: List<Wears>?) {
+        sunglasses.visibility = View.INVISIBLE
+        wind_breaker.visibility = View.INVISIBLE
+        sweater.visibility = View.INVISIBLE
+        winter_jacket.visibility = View.INVISIBLE
+        if (recommendations != null) {
+            for(wear in recommendations){
+                when(wear){
+                    Wears.SUNGLASSES -> sunglasses.visibility = View.VISIBLE
+                    Wears.WINDBREAKER -> wind_breaker.visibility = View.VISIBLE
+                    Wears.SWEATER -> sweater.visibility = View.VISIBLE
+                    Wears.WINTER_JACKET -> winter_jacket.visibility = View.VISIBLE
+                }
             }
         }
     }
@@ -106,7 +117,7 @@ class WeatherFragment : Fragment() {
 
     private fun setCurrentWeather(weatherModel: WeatherModel?) {
         if (weatherModel != null) {
-            weatherTemp.text = "${weatherModel.temp} °C"
+            weatherTemp.text = "${weatherModel.temp.roundToInt()} °C"
             weatherDate.text = weatherModel.time
             weatherCity.text= weatherModel.city
         } else {
@@ -127,8 +138,8 @@ class WeatherFragment : Fragment() {
     }
 
 
-    private fun setForecastWeather(weatherModels: List<WeatherModel>) {
-        weatherAdapter.weathers = weatherModels
+    private fun setForecastWeather(weathersAndRecommendations: List<WeatherAndRecommendation>) {
+        weatherAdapter.weathers = weathersAndRecommendations
         weatherAdapter.notifyDataSetChanged()
     }
 }
