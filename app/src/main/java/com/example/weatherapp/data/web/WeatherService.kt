@@ -1,10 +1,9 @@
 package com.example.weatherapp.data.web
 
 
-import com.example.weatherapp.data.CURRENT_WEATHER_PATH
-import com.example.weatherapp.data.FORECAST_WEATHER_PATH
-import com.google.gson.annotations.SerializedName
-
+import com.example.weatherapp.CURRENT_WEATHER_PATH
+import com.example.weatherapp.FORECAST_WEATHER_PATH
+import com.squareup.moshi.Json
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -27,163 +26,163 @@ interface WeatherService {
 }
 
 data class CurrentWeatherData(
-    @SerializedName("coord")
+    @field:Json(name = "coord")
     val coord: Coord,
-    @SerializedName("weather")
+    @field:Json(name = "weather")
     val weather: List<Weather>,
-    @SerializedName("base")
+    @field:Json(name = "base")
     val base: String,
-    @SerializedName("main")
+    @field:Json(name = "main")
     val main: Main,
-    @SerializedName("visibilty")
+    @field:Json(name = "visibilty")
     val visibility: Int,
-    @SerializedName("wind")
+    @field:Json(name = "wind")
     val wind: Wind,
-    @SerializedName("clouds")
+    @field:Json(name = "clouds")
     val clouds: Clouds,
-    @SerializedName("dt")
+    @field:Json(name = "dt")
     val dt: Int,
-    @SerializedName("sys")
+    @field:Json(name = "sys")
     val sys: Sys,
-    @SerializedName("timezone")
+    @field:Json(name = "timezone")
     val timezone: Int,
-    @SerializedName("id")
+    @field:Json(name = "id")
     val id: Int,
-    @SerializedName("name")
+    @field:Json(name = "name")
     val name: String,
-    @SerializedName("cod")
+    @field:Json(name = "cod")
     val cod: Int
 )
 
 data class Main(
-    @SerializedName("temp")
+    @field:Json(name = "temp")
     val temp: Double,
-    @SerializedName("feels_like")
-    val feels_like: Double,
-    @SerializedName("temp_min")
-    val temp_min: Double,
-    @SerializedName("temp_max")
-    val temp_max: Double,
-    @SerializedName("pressure")
+    @field:Json(name = "feels_like")
+    val feelsLike: Double,
+    @field:Json(name = "temp_min")
+    val tempMin: Double,
+    @field:Json(name = "temp_max")
+    val tempMax: Double,
+    @field:Json(name = "pressure")
     val pressure: Int,
-    @SerializedName("humidity")
+    @field:Json(name = "humidity")
     val humidity: Int
 )
 
 data class Clouds(
-    @SerializedName("all")
+    @field:Json(name = "all")
     val all: Int
 )
 
 data class Coord(
-    @SerializedName("lon")
+    @field:Json(name = "lon")
     val lon: Double,
-    @SerializedName("lat")
+    @field:Json(name = "lat")
     val lat: Double
 )
 
 data class Weather(
-    @SerializedName("id")
+    @field:Json(name = "id")
     val id: Int,
-    @SerializedName("main")
+    @field:Json(name = "main")
     val main: String,
-    @SerializedName("description")
+    @field:Json(name = "description")
     val description: String,
-    @SerializedName("icon")
+    @field:Json(name = "icon")
     val icon: String
 )
 
 data class Sys(
-    @SerializedName("type")
+    @field:Json(name = "type")
     val type: Int,
-    @SerializedName("id")
+    @field:Json(name = "id")
     val id: Int,
-    @SerializedName("country")
+    @field:Json(name = "country")
     val country: String,
-    @SerializedName("sunrise")
+    @field:Json(name = "sunrise")
     val sunrise: Int,
-    @SerializedName("sunset")
+    @field:Json(name = "sunset")
     val sunset: Int
 )
 
 data class Wind(
-    @SerializedName("speed")
+    @field:Json(name = "speed")
     val speed: Double,
-    @SerializedName("deg")
+    @field:Json(name = "deg")
     val deg: Int,
-    @SerializedName("gust")
+    @field:Json(name = "gust")
     val gust: Double
 )
 
 data class ForecastWeatherData(
-    @SerializedName("lat")
+    @field:Json(name = "lat")
     val lat: Double,
-    @SerializedName("lon")
+    @field:Json(name = "lon")
     val lon: Double,
-    @SerializedName("timezone")
+    @field:Json(name = "timezone")
     val timezone: String,
-    @SerializedName("timezone_offset")
-    val timezone_offset: Int,
-    @SerializedName("daily")
+    @field:Json(name = "timezone_offset")
+    val timezoneOffset: Int,
+    @field:Json(name = "daily")
     val daily: List<Daily>
 )
 
 data class Daily(
-    @SerializedName("dt")
+    @field:Json(name = "dt")
     val dt: Int,
-    @SerializedName("sunrise")
+    @field:Json(name = "sunrise")
     val sunrise: Int,
-    @SerializedName("sunset")
+    @field:Json(name = "sunset")
     val sunset: Int,
-    @SerializedName("temp")
+    @field:Json(name = "temp")
     val temp: Temp,
-    @SerializedName("feels_like")
-    val feels_like: FeelsLike,
-    @SerializedName("pressure")
+    @field:Json(name = "feels_like")
+    val feelsLike: FeelsLike,
+    @field:Json(name = "pressure")
     val pressure: Int,
-    @SerializedName("humidity")
+    @field:Json(name = "humidity")
     val humidity: Int,
-    @SerializedName("dew_point")
-    val dew_point: Double,
-    @SerializedName("wind_speed")
-    val wind_speed: Double,
-    @SerializedName("wind_deg")
-    val wind_deg: Int,
-    @SerializedName("weather")
+    @field:Json(name = "dew_point")
+    val dewPoint: Double,
+    @field:Json(name = "wind_speed")
+    val windSpeed: Double,
+    @field:Json(name = "wind_deg")
+    val windDeg: Int,
+    @field:Json(name = "weather")
     val weather: List<Weather>,
-    @SerializedName("clouds")
+    @field:Json(name = "clouds")
     val clouds: Int,
-    @SerializedName("pop")
+    @field:Json(name = "pop")
     val pop: Double,
-    @SerializedName("rain")
+    @field:Json(name = "rain")
     val rain: Double,
-    @SerializedName("uvi")
+    @field:Json(name = "uvi")
     val uvi: Double
 )
 
 data class Temp(
-    @SerializedName("day")
+    @field:Json(name = "day")
     val day: Double,
-    @SerializedName("min")
+    @field:Json(name = "min")
     val min: Double,
-    @SerializedName("max")
+    @field:Json(name = "max")
     val max: Double,
-    @SerializedName("night")
+    @field:Json(name = "night")
     val night: Double,
-    @SerializedName("eve")
+    @field:Json(name = "eve")
     val eve: Double,
-    @SerializedName("morn")
+    @field:Json(name = "morn")
     val morn: Double
 )
 
 data class FeelsLike(
-    @SerializedName("day")
+    @field:Json(name = "day")
     val day: Double,
-    @SerializedName("night")
+    @field:Json(name = "night")
     val night: Double,
-    @SerializedName("eve")
+    @field:Json(name = "eve")
     val eve: Double,
-    @SerializedName("morn")
+    @field:Json(name = "morn")
     val morn: Double
 )
 

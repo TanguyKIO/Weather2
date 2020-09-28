@@ -9,7 +9,6 @@ import com.example.weatherapp.R
 import com.example.weatherapp.domain.entities.Wears
 import com.example.weatherapp.domain.entities.WeatherAndRecommendation
 import com.example.weatherapp.domain.entities.WeatherType
-import kotlinx.android.synthetic.main.weather_fragment.*
 import kotlin.math.roundToInt
 
 class WeatherAdapter(var weathers: List<WeatherAndRecommendation> = emptyList()) :
@@ -51,7 +50,8 @@ class WeatherAdapter(var weathers: List<WeatherAndRecommendation> = emptyList())
 
         internal fun bind(position: Int) {
             date.text = weathers[position].weatherModel.time
-            temp.text = "${weathers[position].weatherModel.temp.roundToInt()} °C"
+            val s = "${weathers[position].weatherModel.temp.roundToInt()} °C"
+            temp.text = s
             when (weathers[position].weatherModel.weather) {
                 WeatherType.THUNDERSTORM -> icon.setImageResource(R.drawable.thunder)
                 WeatherType.DRIZZLE -> icon.setImageResource(R.drawable.rainy)
@@ -78,4 +78,5 @@ class WeatherAdapter(var weathers: List<WeatherAndRecommendation> = emptyList())
         }
     }
 }
+
 

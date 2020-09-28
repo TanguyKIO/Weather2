@@ -1,6 +1,11 @@
 package com.example.weatherapp.domain.di
 
-import com.example.weatherapp.domain.interactor.*
+import com.example.weatherapp.domain.interactor.GetCurrentWeatherAndRecommendation
+import com.example.weatherapp.domain.interactor.GetCurrentWeatherAndRecommendationImpl
+import com.example.weatherapp.domain.interactor.GetForecastWeatherAndRecommendation
+import com.example.weatherapp.domain.interactor.GetForecastWeatherAndRecommendationImpl
+import com.example.weatherapp.domain.interactor.GetRecommendations
+import com.example.weatherapp.domain.interactor.GetRecommendationsImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -10,11 +15,14 @@ import dagger.hilt.android.components.ApplicationComponent
 @InstallIn(ApplicationComponent::class)
 abstract class UseCaseModule {
     @Binds
-    abstract fun provideCurrentWeather(getWeather: GetCurrentWeatherAndRecommendationImpl): GetCurrentWeatherAndRecommendation
+    abstract fun provideCurrentWeather(getWeather: GetCurrentWeatherAndRecommendationImpl)
+            : GetCurrentWeatherAndRecommendation
 
     @Binds
-    abstract fun provideForecastWeather(getWeather: GetForecastWeatherAndRecommendationImpl): GetForecastWeatherAndRecommendation
+    abstract fun provideForecastWeather(getWeather: GetForecastWeatherAndRecommendationImpl)
+            : GetForecastWeatherAndRecommendation
 
     @Binds
-    abstract fun provideRecommendations(getRecommendations: GetRecommendationsImpl): GetRecommendations
+    abstract fun provideRecommendations(getRecommendations: GetRecommendationsImpl)
+            : GetRecommendations
 }

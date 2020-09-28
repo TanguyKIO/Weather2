@@ -1,7 +1,7 @@
 package com.example.weatherapp.domain.entities
 
 
-class WeatherModel(
+data class WeatherModel(
     val time: String,
     val city: String,
     val temp: Double,
@@ -9,9 +9,7 @@ class WeatherModel(
     val windSpeed: Double,
     val feelsLikeTemp: Double,
     val humidity: Int? //1..100
-) {
-
-}
+)
 
 enum class WeatherType {
     THUNDERSTORM,

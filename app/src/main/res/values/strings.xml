@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="weather_desc">Icon of weather</string>
+    <string name="wears_desc">Icon of recommended wears</string>
 </resources>

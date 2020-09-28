@@ -12,7 +12,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.domain.entities.*
+import com.example.weatherapp.domain.entities.State
+import com.example.weatherapp.domain.entities.Wears
+import com.example.weatherapp.domain.entities.WeatherModel
+import com.example.weatherapp.domain.entities.WeatherType
+import com.example.weatherapp.domain.entities.WeatherAndRecommendation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.weather_fragment.*
 import kotlin.math.roundToInt
@@ -96,16 +100,20 @@ class WeatherFragment : Fragment() {
     }
 
     private fun showCurrentState(state: State) {
+        val s: String
         when (state) {
             State.NO_DATA -> {
-                warning.text = "Aucune donnée accessible"
+                s = "Aucune donnée accessible"
+                warning.text = s
                 refresh?.isRefreshing = false
             }
             State.FAILURE -> {
-                warning.text = "Connectez-vous à Internet"
+                s = "Connectez-vous à Internet"
+                warning.text = s
                 refresh?.isRefreshing = false
             }
             State.LOADING -> {
+                warning.text = null
                 refresh?.isRefreshing = true
             }
             State.SUCCESS -> {
@@ -117,7 +125,8 @@ class WeatherFragment : Fragment() {
 
     private fun setCurrentWeather(weatherModel: WeatherModel?) {
         if (weatherModel != null) {
-            weatherTemp.text = "${weatherModel.temp.roundToInt()} °C"
+            val s = "${weatherModel.temp.roundToInt()} °C"
+            weatherTemp.text = s
             weatherDate.text = weatherModel.time
             weatherCity.text= weatherModel.city
         } else {
@@ -143,3 +152,4 @@ class WeatherFragment : Fragment() {
         weatherAdapter.notifyDataSetChanged()
     }
 }
+

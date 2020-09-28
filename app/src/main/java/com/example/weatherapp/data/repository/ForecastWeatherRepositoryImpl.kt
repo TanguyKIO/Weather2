@@ -1,8 +1,23 @@
 package com.example.weatherapp.data.repository
 
-import com.example.weatherapp.data.API_KEY
-import com.example.weatherapp.data.db.WeatherDao
+import com.example.weatherapp.CLOUDS_MAX
+import com.example.weatherapp.CLOUDS_MIN
+import com.example.weatherapp.SUN
+import com.example.weatherapp.FOG_MAX
+import com.example.weatherapp.FOG_MIN
+import com.example.weatherapp.SNOW_MAX
+import com.example.weatherapp.SNOW_MIN
+import com.example.weatherapp.RAIN_MAX
+import com.example.weatherapp.RAIN_MIN
+import com.example.weatherapp.DRIZZLE_MAX
+import com.example.weatherapp.DRIZZLE_MIN
+import com.example.weatherapp.THUNDER_MAX
+import com.example.weatherapp.THUNDER_MIN
+import com.example.weatherapp.API_KEY
+import com.example.weatherapp.K
+import com.example.weatherapp.FORECAST_NUMBER
 import com.example.weatherapp.data.db.ForecastWeatherEntity
+import com.example.weatherapp.data.db.WeatherDao
 import com.example.weatherapp.data.web.ForecastWeatherData
 import com.example.weatherapp.data.web.WeatherService
 import com.example.weatherapp.domain.entities.ForecastWeatherResponse
@@ -11,14 +26,12 @@ import com.example.weatherapp.domain.entities.WeatherModel
 import com.example.weatherapp.domain.entities.WeatherType
 import com.example.weatherapp.domain.interactor.ForecastWeatherRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import java.text.SimpleDateFormat
 import java.util.*
-
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,10 +43,9 @@ class ForecastWeatherRepositoryImpl @Inject constructor(
 
     override fun getForecastWeather(city: String, units: String): Flow<ForecastWeatherResponse> {
         return flow {
-            val cached = weatherDao.getLastForecast(7)
+            val cached = weatherDao.getLastForecast(FORECAST_NUMBER)
             val reversed = cached.asReversed()
             emit(entityToModel(reversed, State.LOADING, city))
-            delay(1000)
             val weatherEntities = remoteToEntity(
                 weatherService.getForecastWeather(
                     "45.75",
@@ -50,7 +62,7 @@ class ForecastWeatherRepositoryImpl @Inject constructor(
             val data = newCache.asReversed()
             emit(entityToModel(data, State.SUCCESS, city))
         }.catch {
-            val cached = weatherDao.getLastForecast(7)
+            val cached = weatherDao.getLastForecast(FORECAST_NUMBER)
             val reversed = cached.asReversed()
             if (reversed.isEmpty()) {
                 emit(entityToModel(reversed, State.NO_DATA, city))
@@ -67,8 +79,8 @@ class ForecastWeatherRepositoryImpl @Inject constructor(
                 weather.dt,
                 weather.temp.day,
                 weather.weather[0].id,
-                weather.wind_speed,
-                weather.feels_like.day,
+                weather.windSpeed,
+                weather.feelsLike.day,
                 weather.humidity
             )
             weatherEntities.add(weatherEntity)
@@ -84,17 +96,17 @@ class ForecastWeatherRepositoryImpl @Inject constructor(
         val weatherModels = mutableListOf<WeatherModel>()
         for (weatherEntity in weatherEntities) {
             val weatherType: WeatherType = when (weatherEntity.weather) {
-                in 200..232 -> WeatherType.THUNDERSTORM
-                in 300..321 -> WeatherType.DRIZZLE
-                in 500..531 -> WeatherType.RAIN
-                in 600..622 -> WeatherType.SNOW
-                in 701..781 -> WeatherType.FOG
-                800 -> WeatherType.CLEAR
-                in 801..804 -> WeatherType.CLOUDS
+                in THUNDER_MIN..THUNDER_MAX -> WeatherType.THUNDERSTORM
+                in DRIZZLE_MIN..DRIZZLE_MAX -> WeatherType.DRIZZLE
+                in RAIN_MIN..RAIN_MAX -> WeatherType.RAIN
+                in SNOW_MIN..SNOW_MAX -> WeatherType.SNOW
+                in FOG_MIN..FOG_MAX -> WeatherType.FOG
+                SUN -> WeatherType.CLEAR
+                in CLOUDS_MIN..CLOUDS_MAX -> WeatherType.CLOUDS
                 else -> WeatherType.UNKNOWN
             }
 
-            val millis: Long = weatherEntity.time.toLong() * 1000
+            val millis: Long = weatherEntity.time.toLong() * K
             val date = Date(millis)
             val sdf = SimpleDateFormat("EEE d MM", Locale.FRANCE)
             val formattedDate = sdf.format(date)

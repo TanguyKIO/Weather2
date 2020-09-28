@@ -7,13 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.domain.entities.State
 import com.example.weatherapp.domain.entities.WeatherAndRecommendation
-import com.example.weatherapp.domain.entities.WeatherModel
 import com.example.weatherapp.domain.interactor.GetForecastWeatherAndRecommendation
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ForecastWeatherViewModel @ViewModelInject constructor(private val getForecastWeather: GetForecastWeatherAndRecommendation) :
+class ForecastWeatherViewModel @ViewModelInject constructor
+    (private val getForecastWeather: GetForecastWeatherAndRecommendation) :
     ViewModel() {
 
     private val _weathersAndRecommendations = MutableLiveData<List<WeatherAndRecommendation>>()

@@ -1,6 +1,8 @@
 package com.example.weatherapp.domain.interactor
 
-import com.example.weatherapp.domain.entities.*
+import com.example.weatherapp.domain.entities.CurrentWeatherAndRecommendationResponse
+import com.example.weatherapp.domain.entities.CurrentWeatherResponse
+import com.example.weatherapp.domain.entities.WeatherAndRecommendation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
