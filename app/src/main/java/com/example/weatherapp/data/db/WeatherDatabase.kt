@@ -19,7 +19,7 @@ abstract class WeatherDatabase : RoomDatabase() {
                 var instance = INSTANCE
                 if (instance == null) {
                     instance = Room.databaseBuilder(
-                        context.applicationContext,
+                        context,
                         WeatherDatabase::class.java,
                         "weather_database"
                     )

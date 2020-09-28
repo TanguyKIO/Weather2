@@ -1,7 +1,7 @@
 package com.example.weatherapp.ui.presentation
 
 
-import androidx.hilt.lifecycle.ViewModelInject
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,8 +13,9 @@ import com.example.weatherapp.domain.interactor.GetCurrentWeatherAndRecommendati
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CurrentWeatherViewModel @ViewModelInject constructor
+class CurrentWeatherViewModel @Inject constructor
     (private val getCurrentWeather: GetCurrentWeatherAndRecommendation) :
     ViewModel() {
     private val _weatherModel = MutableLiveData<WeatherModel?>()

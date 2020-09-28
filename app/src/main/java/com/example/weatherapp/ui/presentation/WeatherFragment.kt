@@ -1,5 +1,6 @@
 package com.example.weatherapp.ui.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -17,18 +18,20 @@ import com.example.weatherapp.domain.entities.Wears
 import com.example.weatherapp.domain.entities.WeatherModel
 import com.example.weatherapp.domain.entities.WeatherType
 import com.example.weatherapp.domain.entities.WeatherAndRecommendation
-import dagger.hilt.android.AndroidEntryPoint
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.weather_fragment.*
+import javax.inject.Inject
 import kotlin.math.roundToInt
 
-@AndroidEntryPoint
 class WeatherFragment : Fragment() {
+    @Inject
+    lateinit var currentViewModel : CurrentWeatherViewModel
+    @Inject
+    lateinit var forecastViewModel : ForecastWeatherViewModel
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    private val currentViewModel: CurrentWeatherViewModel by viewModels()
-    private val forecastViewModel: ForecastWeatherViewModel by viewModels()
 
     private val weatherAdapter = WeatherAdapter()
 
@@ -36,6 +39,10 @@ class WeatherFragment : Fragment() {
         fun newInstance() = WeatherFragment()
     }
 
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

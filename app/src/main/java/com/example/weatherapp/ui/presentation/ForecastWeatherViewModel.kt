@@ -1,6 +1,5 @@
 package com.example.weatherapp.ui.presentation
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +10,9 @@ import com.example.weatherapp.domain.interactor.GetForecastWeatherAndRecommendat
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ForecastWeatherViewModel @ViewModelInject constructor
+class ForecastWeatherViewModel @Inject constructor
     (private val getForecastWeather: GetForecastWeatherAndRecommendation) :
     ViewModel() {
 
