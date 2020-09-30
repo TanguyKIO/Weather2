@@ -21,7 +21,7 @@ class GetRecommendationsImpl @Inject constructor() : GetRecommendations {
     if (weather.temp > MIN_TEMP) {
             recommendation.add(Wears.SWEATER)
         }
-        if (weather.windSpeed > MIN_WIND && weather.temp < MAX_TEMP_WIND && weather.temp >= MAX_TEMP) {
+        if (weather.windSpeed > MIN_WIND && weather.temp < MAX_TEMP_WIND && weather.temp >= MIN_TEMP) {
             recommendation.add(Wears.WINDBREAKER)
         }
         return recommendation

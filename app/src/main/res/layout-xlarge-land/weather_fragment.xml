@@ -22,33 +22,48 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/lgc"
-                android:textSize="35sp"
+                android:textSize="70sp"
                 app:layout_constraintDimensionRatio="2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="WeatherApp" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginBottom="60dp"
+                android:layout_marginTop="120dp"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/weatherIcon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
             <ImageView
                 android:id="@+id/weatherIcon"
                 android:contentDescription="@string/weather_desc"
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_marginStart="70dp"
-                android:layout_marginEnd="70dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="30dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/weatherTitle"
-                tools:srcCompat="@drawable/clear" />
+                tools:srcCompat="@drawable/nowifi" />
 
             <TextView
                 android:id="@+id/weatherCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lgc"
-                android:textSize="30sp"
+                android:textSize="50sp"
                 app:layout_constraintDimensionRatio="2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/weatherIcon"
+                app:layout_constraintStart_toStartOf="@id/weatherIcon"
                 app:layout_constraintTop_toBottomOf="@+id/weatherIcon"
                 tools:text="Lyon" />
 
@@ -56,12 +71,11 @@
                 android:id="@+id/weatherTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lgc"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                app:layout_constraintDimensionRatio="2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="45sp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="@id/weatherIcon"
+                app:layout_constraintStart_toStartOf="@id/weatherIcon"
                 app:layout_constraintTop_toBottomOf="@+id/weatherCity"
                 tools:text="20" />
 
@@ -70,20 +84,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lgc"
-                android:textSize="14sp"
+                android:textSize="30sp"
+                android:layout_marginTop="15dp"
                 app:layout_constraintDimensionRatio="2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/weatherIcon"
+                app:layout_constraintStart_toStartOf="@id/weatherIcon"
                 app:layout_constraintTop_toBottomOf="@id/weatherTemp"
                 tools:text="20" />
-
             <ImageView
                 android:id="@+id/sunglasses"
                 android:contentDescription="@string/wears_desc"
                 android:visibility="invisible"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="70dp"
+                android:padding="2dp"
                 app:layout_constraintEnd_toStartOf="@id/weatherIcon"
                 app:layout_constraintTop_toTopOf="@id/weatherIcon"
                 tools:text="20"/>
@@ -92,9 +107,10 @@
                 android:id="@+id/sweater"
                 android:contentDescription="@string/wears_desc"
                 android:visibility="invisible"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="15dp"
+                android:padding="2dp"
                 app:layout_constraintEnd_toStartOf="@id/weatherIcon"
                 app:layout_constraintTop_toBottomOf="@id/sunglasses"
                 tools:text="20"/>
@@ -103,9 +119,10 @@
                 android:id="@+id/winter_jacket"
                 android:contentDescription="@string/wears_desc"
                 android:visibility="invisible"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="15dp"
+                android:padding="2dp"
                 app:layout_constraintEnd_toStartOf="@id/weatherIcon"
                 app:layout_constraintTop_toBottomOf="@id/sweater"
                 tools:text="20"/>
@@ -114,42 +131,30 @@
                 android:id="@+id/wind_breaker"
                 android:contentDescription="@string/wears_desc"
                 android:visibility="invisible"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="15dp"
+                android:padding="2dp"
                 app:layout_constraintEnd_toStartOf="@id/weatherIcon"
                 app:layout_constraintTop_toBottomOf="@id/winter_jacket"
                 tools:text="20"/>
+
 
             <TextView
                 android:id="@+id/warning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:fontFamily="@font/lgc"
+                android:layout_marginBottom="30dp"
                 android:textColor="@color/red"
-                android:textSize="15sp"
+                android:textSize="24sp"
                 app:layout_constraintDimensionRatio="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+                app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="Aucune donnée en cache, connectez-vous à Internet" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="50dp"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/weatherDate" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
